@@ -1,0 +1,160 @@
+"运行在非兼容(VI)模式下(命令模式下 TAB 补全)
+set nocompatible
+ 
+"设定文件编码
+"内部编码
+set encoding=utf-8
+"默认保存编码
+set fileencoding=utf-8
+"识别编码
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+"正确处理中文折行
+set formatoptions+=mM
+"将不明宽度的字符作为双字节
+set ambiwidth=double
+ 
+set guifont=Monaco:h10:w6
+"set guifontwide=NSimSun-18030,NSimSun
+ 
+"开启语法加亮
+syntax on
+"配色风格
+colorscheme desert
+ 
+"简洁启动模式
+set shortmess=atI
+"设定 GUI 选项
+"set guioptions=gmrLtT  m:菜单 T:工具栏 r:滚动条
+set guioptions=gLt
+"  "状态栏样式
+"  set laststatus=2
+"    function! CurDir()
+"       let curdir = substitute(getcwd(), '/Users/amir/', "~/", "g")
+"       return curdir
+"    endfunction
+"  set statusline=\ %F%m%r%h\ [%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}]\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
+"在状态栏位置显示补全菜单
+set wildmenu
+"命令行高度
+set cmdheight=1
+"显示标尺
+set ruler
+ 
+"显示不完整的段落
+set display=lastline
+"自动折行
+"set nowrap
+set wrap
+"按完整单词折行
+set nolinebreak
+"set linebreak
+"设定行距 ( GUI 界面中生效 )
+set linespace=4
+"行宽（输入时自动插入换行符）
+"set textwidth=80
+set textwidth=0
+"j k 在屏幕行间上下移动；gj gk 在物理行间上下移动
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
+"使用 Space 翻页
+noremap <Space> <PageDown>
+ 
+"允许所有模式下的虚空间编辑 （虚空间:不包含任何文本的空间。如换行符之后）
+"set virtualedit=all
+"禁止在虚空间编辑
+"set virtualedit=
+"换行符后一格作为虚空间
+set virtualedit=onemore,block
+ 
+"设定制表符宽度
+set tabstop=4
+"设定 Tab 缩进的空格数
+set shiftwidth=4
+"将缩进转换为空格
+set expandtab
+"设定自动缩进(新行与前一行缩进相同)
+"set autoindent
+set noautoindent
+"插入模式下，“←”如何删除光标前的字符：行首空白、换行符、插入点之前的字符
+set backspace=indent,eol,start
+"粘贴模式
+"set paste "set nopaste
+ 
+"命令行历史纪录
+set history=500
+ 
+"禁用增量搜索
+set incsearch
+"set noincsearch
+"搜索时忽略大小写
+set ignorecase
+"set noignorecase
+"高亮显示搜索结果
+set hlsearch
+ 
+"设定折叠方式
+"set foldmethod=manual
+ 
+"以下字符将被视为单词的一部分 (ASCII)：
+set iskeyword+=33-47,58-64,91-96,123-128
+
+"记忆最后编辑状态
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+set viminfo='1000,f1,<500
+
+chdir $VIM/..
+
+if has('gui_running') && has("win32")
+    map <F11> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+endif
+
+""python block
+"python << EOF
+"import vim
+"def SetBreakpoint():
+"    import re
+"
+"    nLine = int( vim.eval( 'line(".")'))
+"
+"    strLine = vim.current.line
+"    strWhite = re.search( '^(\s*)', strLine).group(1)
+"
+"    vim.current.buffer.append(
+"       "%(space)spdb.set_trace() %(mark)s Breakpoint %(mark)s" %
+"         {'space':strWhite, 'mark': '#' * 30}, nLine - 1)
+"
+"    for strLine in vim.current.buffer:
+"        if strLine == "import pdb":
+"            break
+"    else:
+"        vim.current.buffer.append( 'import pdb', 0)
+"        vim.command( 'normal j1')
+"
+"vim.command( 'map <f7> :py SetBreakpoint()<cr>')
+"
+"def RemoveBreakpoints():
+"    import re
+"    nCurrentLine = int( vim.eval( 'line(".")'))
+"    nLines = []
+"    nLine = 1
+"    for strLine in vim.current.buffer:
+"        if strLine == 'import pdb' or strLine.lstrip()[:15] == 'pdb.set_trace()':
+"            nLines.append( nLine)
+"        nLine += 1
+"    nLines.reverse()
+"    for nLine in nLines:
+"        vim.command( 'normal %dG' % nLine)
+"        vim.command( 'normal dd')
+"        if nLine < nCurrentLine:
+"            nCurrentLine -= 1
+"    vim.command( 'normal %dG' % nCurrentLine)
+"vim.command( 'map <s-f7> :py RemoveBreakpoints()<cr>')
+"
+"def RunDebugger():
+"    vim.command( 'wall')
+"    strFile = vim.eval( "g:mainfile")
+"    vim.command( "!start python -m pdb %s" % strFile)
+"vim.command( 'map <s-f12> :py RunDebugger()<cr>')
+"EOF

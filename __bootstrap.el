@@ -49,7 +49,7 @@
     (alc-dir   .   "_autoload-conf/")
     (wk-dir    .   "sandbox/")))
 
-(defvar iff-source (funcall iff--find-path "init.*el\\|init.*emacs\\|emacs.*init"))
+(defvar iff-source (funcall iff--find-path "iff\\|init.*el\\|init.*emacs\\|emacs.*init"))
 (defvar iff-pre-init-files
   (funcall iff--find-files iff-source "^__.*\\.el\\'"))
 (defvar iff-init-files
