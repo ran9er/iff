@@ -1,0 +1,241 @@
+(#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data
+               ("#env"
+                (nil nil)
+                "custom-syntax"
+                (nil nil)
+                "eltempl"
+                (nil nil)
+                "emacs-lisp-mode#autoload"
+                (("top")
+                 nil)
+                "emacs-lisp-mode#closure"
+                (nil nil)
+                "emacs-lisp-mode#cond"
+                (nil nil)
+                "emacs-lisp-mode#condition-case"
+                (nil
+                 ("notop"))
+                "emacs-lisp-mode#defun"
+                (("top")
+                 nil)
+                "emacs-lisp-mode#hash-table"
+                (nil nil)
+                "emacs-lisp-mode#let"
+                (nil
+                 ("notop"))
+                "emacs-lisp-mode#ol"
+                (nil nil)
+                "emacs-lisp-mode#read-file"
+                (nil nil)
+                "emacs-lisp-mode#test"
+                (nil
+                 ("top"))
+                "emacs-lisp-mode#upcase"
+                (nil nil)
+                "for"
+                (nil nil)
+                "head"
+                (("head")
+                 ("top"))
+                "js#cl"
+                (nil nil)
+                "js#func"
+                (("nohol")
+                 nil)
+                "js#func2"
+                (("nohol")
+                 nil)
+                "js#function"
+                (("hol")
+                 nil)
+                "js#var"
+                (nil nil)
+                "let"
+                (nil nil)
+                "lisp#lambda"
+                (nil nil)
+                "org-mode#head"
+                (("head")
+                 ("top"))
+                "remove-overlays"
+                (nil nil)
+                "save-excursion"
+                (nil nil)
+                "scm#define"
+                (nil nil)
+                "scm#defunc"
+                (nil nil)
+                "snippets=file"
+                (nil nil)
+                "sql#create"
+                (nil nil)
+                "sql#del"
+                (nil nil)
+                "sql#func"
+                (nil nil)
+                "sql#insert"
+                (nil nil)
+                "sql#select"
+                (nil nil)
+                "sql#slct"
+                (nil nil)
+                "sql#update"
+                (nil nil)
+                "sql#view"
+                (nil nil)
+                "t"
+                (nil
+                 ("top" "tail" "notop" "head"))
+                "wx.lua.newfile"
+                (("head")
+                 nil)))
+   #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data
+                 ("env"
+                  ("#env")
+                  "cstm"
+                  ("custom-syntax")
+                  "cust"
+                  ("custom-syntax")
+                  "eltempl"
+                  ("eltempl")
+                  "et"
+                  ("eltempl")
+                  "al"
+                  ("emacs-lisp-mode#autoload")
+                  "autoload"
+                  ("emacs-lisp-mode#autoload")
+                  "cl"
+                  ("emacs-lisp-mode#closure" "js#cl")
+                  "closure"
+                  ("emacs-lisp-mode#closure")
+                  "cd"
+                  ("emacs-lisp-mode#cond")
+                  "cn"
+                  ("emacs-lisp-mode#cond")
+                  "co"
+                  ("emacs-lisp-mode#cond" "emacs-lisp-mode#condition-case")
+                  "cond"
+                  ("emacs-lisp-mode#cond")
+                  "case"
+                  ("emacs-lisp-mode#condition-case")
+                  "cc"
+                  ("emacs-lisp-mode#condition-case")
+                  "condcase"
+                  ("emacs-lisp-mode#condition-case")
+                  "def"
+                  ("emacs-lisp-mode#defun" "sql#func")
+                  "defun"
+                  ("emacs-lisp-mode#defun")
+                  "f"
+                  ("emacs-lisp-mode#defun" "js#func" "js#func2" "js#function" "scm#defunc")
+                  "hash"
+                  ("emacs-lisp-mode#hash-table")
+                  "ht"
+                  ("emacs-lisp-mode#hash-table")
+                  "le"
+                  ("emacs-lisp-mode#let")
+                  "lt"
+                  ("emacs-lisp-mode#let" "let")
+                  "ol"
+                  ("emacs-lisp-mode#ol" "remove-overlays")
+                  "readf"
+                  ("emacs-lisp-mode#read-file")
+                  "rf"
+                  ("emacs-lisp-mode#read-file")
+                  "test"
+                  ("emacs-lisp-mode#test")
+                  "uc"
+                  ("emacs-lisp-mode#upcase")
+                  "upcase"
+                  ("emacs-lisp-mode#upcase")
+                  "for"
+                  ("for")
+                  "h"
+                  ("head" "org-mode#head")
+                  "v"
+                  ("js#var" "scm#define")
+                  "let"
+                  ("let")
+                  "l"
+                  ("lisp#lambda")
+                  "lambda"
+                  ("lisp#lambda")
+                  "lbd"
+                  ("lisp#lambda")
+                  "lm"
+                  ("lisp#lambda")
+                  "ro"
+                  ("remove-overlays")
+                  "se"
+                  ("save-excursion")
+                  "d"
+                  ("scm#define" "scm#defunc")
+                  "snip"
+                  ("snippets=file")
+                  "create"
+                  ("sql#create")
+                  "crt"
+                  ("sql#create")
+                  "del"
+                  ("sql#del")
+                  "dlt"
+                  ("sql#del")
+                  "fun"
+                  ("sql#func")
+                  "func"
+                  ("sql#func")
+                  "ins"
+                  ("sql#insert")
+                  "is"
+                  ("sql#insert")
+                  "sl"
+                  ("sql#select")
+                  "slc"
+                  ("sql#select" "sql#slct")
+                  "slct"
+                  ("sql#slct")
+                  "ud"
+                  ("sql#update")
+                  "udt"
+                  ("sql#update")
+                  "up"
+                  ("sql#update")
+                  "view"
+                  ("sql#view")
+                  "vw"
+                  ("sql#view")
+                  "t"
+                  ("t")
+                  "new"
+                  ("wx.lua.newfile")
+                  "newfile"
+                  ("wx.lua.newfile")
+                  "wxnew"
+                  ("wx.lua.newfile")))
+   #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data
+                 ("emacs-lisp-mode"
+                  ("#env" "eltempl" "emacs-lisp-mode#closure" "emacs-lisp-mode#cond" "emacs-lisp-mode#defun" "emacs-lisp-mode#hash-table" "emacs-lisp-mode#let" "emacs-lisp-mode#ol" "emacs-lisp-mode#read-file" "emacs-lisp-mode#test" "let" "lisp#lambda")
+                  "lisp-interaction-mode"
+                  ("#env" "emacs-lisp-mode#closure" "emacs-lisp-mode#cond" "emacs-lisp-mode#defun" "emacs-lisp-mode#hash-table" "emacs-lisp-mode#let" "emacs-lisp-mode#ol" "emacs-lisp-mode#read-file" "emacs-lisp-mode#test" "let" "lisp#lambda")
+                  "lisp-mode"
+                  ("#env" "emacs-lisp-mode#closure" "emacs-lisp-mode#cond" "emacs-lisp-mode#defun" "emacs-lisp-mode#hash-table" "emacs-lisp-mode#let" "emacs-lisp-mode#ol" "emacs-lisp-mode#read-file" "emacs-lisp-mode#test" "let" "lisp#lambda")
+                  "all"
+                  ("custom-syntax" "emacs-lisp-mode#autoload" "emacs-lisp-mode#condition-case" "emacs-lisp-mode#ol" "emacs-lisp-mode#test" "emacs-lisp-mode#upcase" "head" "remove-overlays" "save-excursion" "snippets=file" "t")
+                  "c-mode"
+                  ("for")
+                  "js-mode"
+                  ("for" "js#cl" "js#func" "js#func2" "js#function" "js#var")
+                  "inferior-scheme-mode"
+                  ("lisp#lambda" "scm#define" "scm#defunc")
+                  "scheme-mode"
+                  ("lisp#lambda" "scm#define" "scm#defunc")
+                  "slime-repl-mode"
+                  ("lisp#lambda")
+                  "org-mode"
+                  ("org-mode#head")
+                  "sql-interactive-mode"
+                  ("sql#create" "sql#del" "sql#func" "sql#insert" "sql#select" "sql#slct" "sql#update" "sql#view")
+                  "sql-mode"
+                  ("sql#create" "sql#del" "sql#func" "sql#insert" "sql#select" "sql#slct" "sql#update" "sql#view")
+                  "lua-mode"
+                  ("wx.lua.newfile"))))

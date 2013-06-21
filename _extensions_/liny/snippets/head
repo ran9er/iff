@@ -1,0 +1,16 @@
+<------alias
+h
+<------modes
+all
+<------keywords
++head top
+<------environment
+
+<------snippet
+-*- encoding: utf-8-unix; -*-
+File-name   : <${$(insert (if (buffer-file-name)(file-name-nondirectory (buffer-file-name))(buffer-name)))}>
+Create      : <${$(insert (format-time-string "%Y-%m-%d %H\:%M\:%S" (current-time)))} ${$(insert user-full-name)}>
+Time-stamp  : <>
+${0$(comment-region
+     (overlay-start (overlay-get ovl 'origin))
+     (overlay-end ovl))}

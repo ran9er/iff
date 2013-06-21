@@ -1,0 +1,17 @@
+<------alias
+snip
+<------modes
+all
+<------environment
+<------keywords
+<------snippet
+<------alias
+${1:alias}
+<------modes
+${2:emacs-lisp-mode lisp-mode lisp-interaction-mode}
+<------keywords
+$3
+<------environment
+$4
+<------snippet
+$0

@@ -1,0 +1,18 @@
+<------alias
+test
+<------modes
+emacs-lisp-mode lisp-mode lisp-interaction-mode all
+<------keywords
+top
+<------environment
+<------snippet
+(defun ${1:FuncName} (${3:Args%? })
+  "this func's name is $1"
+  (let (${3} $3)
+    ${$(insert "hello!")})
+    $1=$1
+    ${1$(insert user-full-name)}
+    $0
+    a b     c
+$4
+    $2)

@@ -1,0 +1,10 @@
+<------alias
+cl
+<------modes
+js-mode
+<------keywords
+
+<------environment
+
+<------snippet
+console.log($0)

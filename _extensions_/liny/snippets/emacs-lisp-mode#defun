@@ -1,0 +1,13 @@
+
+<------alias
+f defun def
+<------modes
+emacs-lisp-mode lisp-mode lisp-interaction-mode
+<------keywords
++top
+<------environment
+
+<------snippet
+(defun ${1:FuncName} (${2:args%? })
+  "$1 is writen by ${$(insert user-full-name)}"
+  $0)
