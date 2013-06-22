@@ -12,6 +12,7 @@
           (list
            (expand-file-name "../../git/bin/" exec-directory)
            (expand-file-name "../other/mpg123/" exec-directory)
+           (expand-file-name "../other/exec/" exec-directory)
            exec-directory)))
 
 ;; * working dir

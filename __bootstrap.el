@@ -1,10 +1,9 @@
 (defvar initial-framework-for-emacs nil)
 
 (defvar iff--find-path
-  (lambda (regexp)
+  (lambda (regexp base)
     (let* ((this-file (file-name-nondirectory load-file-name))
-           (this-dir (file-name-directory load-file-name))
-           base-dir)
+           (this-dir (file-name-directory load-file-name)))
       (cond
        ;; when specify iff-source outside, and load this file
        ((boundp 'iff-source) nil)
@@ -12,13 +11,6 @@
        ((member load-file-name
                 (mapcar 'expand-file-name
                         (list "~/.emacs" (locate-library site-run-file))))
-        (setq base-dir
-              (apply 'expand-file-name
-                     (cond
-                      ((eq system-type 'windows-nt)
-                       `(".." ,exec-directory))
-                      (t
-                       `("~")))))
         ((lambda (x) (file-name-as-directory
                  ;; iff-source is the newest directory with "init" and "emacs" in it's name
                  ;; or directory where this file is located (iff-source is $HOME or site-lisp)
@@ -26,7 +18,7 @@
          (let (result)
            (mapc
             (lambda (f) (if (file-directory-p f)(setq result (append result (list f)))))
-            (directory-files base-dir t regexp 'file-newer-than-file-p))
+            (directory-files base t regexp 'file-newer-than-file-p))
            (setq iff-source-candidates result))))
        ;; when this file's name is not .emacs or site-start.el, for example as bootstrap.el
        ;; load this file in emacs init file : (load "...../bootstrap.el")
@@ -41,6 +33,7 @@
 (defvar iff-length nil)
 
 (defvar iff-source-candidates nil)
+
 (defvar iff-branch
   '((lib-dir   .   "_lib/")
     (lib-df    .   "_loaddefs")
@@ -49,7 +42,16 @@
     (alc-dir   .   "_autoload-conf/")
     (wk-dir    .   "sandbox/")))
 
-(defvar iff-source (funcall iff--find-path "iff\\|init.*el\\|init.*emacs\\|emacs.*init"))
+(defvar iff-source
+  (funcall iff--find-path
+           "iff\\|init.*el\\|init.*emacs\\|emacs.*init"
+           (apply 'expand-file-name
+                  (cond
+                   ((eq system-type 'windows-nt)
+                    `(".." ,exec-directory))
+                   (t
+                    `("~"))))))
+
 (defvar iff-pre-init-files
   (funcall iff--find-files iff-source "^__.*\\.el\\'"))
 (defvar iff-init-files
@@ -123,20 +125,15 @@
     (let ((tmp (float-time))
           (var (or var 'iff-length))
           (dir (cdr (assoc path iff-branch))))
-      (funcall iff--message (format "Eval-after-load %s" name))
-      (defvar iff-feature-file-hash (make-hash-table :test 'equal :size 20))
+      (funcall iff--message (format "Eval-after-load %s" path))
       (funcall iff--check-directory dir iff-source t)
       (mapc
-       (lambda (x)
-         (puthash
-          (intern (file-name-sans-extension (file-name-nondirectory x))) x
-          iff-feature-file-hash))
-       (directory-files (expand-file-name dir iff-source) t "\\.el\\'"))
-      (maphash
-       (lambda (x y)
-         (eval-after-load x `(load ,y))
-         (message (format "eval-after-load %s" y)))
-       iff-feature-file-hash)
+       (lambda(x)
+         (eval-after-load
+             (intern (file-name-sans-extension (file-name-nondirectory x)))
+           `(load ,x))
+         (message (format "eval-after-load %s" x)))
+       (directory-files (expand-file-name "_eval-after-load" iff-source) t "\\.el\\'"))
       (set var
            (cons
             (cons "gen eval-after-load"
@@ -186,7 +183,9 @@
                  (apply '+ (mapcar 'cdr iff-length)))
            (reverse iff-length)))
 
-    (add-hook 'emacs-startup-hook iff--startup-hook)))
+    (add-hook 'emacs-startup-hook iff--startup-hook)
+
+    "success"))
 
 (defvar iff-status
   (catch 'quit (funcall iff- 'iff-source)))

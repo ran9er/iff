@@ -53,3 +53,5 @@
 (defmacro acc (x)
   `(progn (defvar ,x 0)
           (setq ,x (1+ ,x))))
+
+(liny-mode)

@@ -18,4 +18,4 @@
 ;;     "bootstrap.el"
 ;;     iff-source)))
 
-(load "../init.emacs/bootstrap")
+(load "../iffe/__bootstrap")

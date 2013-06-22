@@ -47,6 +47,7 @@
  save-abbrevs          nil
  debug-on-error        t
  )
+(setq-default truncate-partial-width-windows nil) ;分割窗口自动换行
 
 ;; narrow
 (put 'narrow-to-region 'disabled nil)
