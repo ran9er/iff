@@ -18,4 +18,4 @@
 ;;     "bootstrap.el"
 ;;     iff-source)))
 
-(load "../iffe/__bootstrap")
+(load "../iff/__bootstrap")
