@@ -1,52 +1,56 @@
 (add-to-list 'load-path (expand-file-name "slime" exts-dir))
 (require 'slime-autoloads)
 
-(let ((prefix (expand-file-name "../.." exec-directory)))
-  (setq slime-lisp-implementations
-        (append
-         (if (eq system-type 'windows-nt)
-             (prog1
-                 `((ccl (,(expand-file-name "ccl/wx86cl.exe" prefix))
-                        :coding-system utf-8-unix)
-                   (sbcl (,(expand-file-name "sbcl/sbcl.exe" prefix))
-                         :coding-system utf-8-unix)
-                   (Racket (,(expand-file-name "Racket/Racket.exe" prefix))
-                           :coding-system utf-8-unix)
-                   (mit-scheme (,(expand-file-name
-                                  "mit-scheme/bin/mit-scheme.exe" prefix)
+(let* ((prefix (expand-file-name "../.." exec-directory))
+       (getn (lambda(x &rest rst)`(,(expand-file-name x prefix) ,@rst)))
+       (idx (if (eq system-type 'windows-nt) 1 2))
+       (arg-lst
+        `((ccl :coding-system utf-8-unix)
+          (sbcl :coding-system utf-8-unix)
+          (Racket :coding-system utf-8-unix)
+          (mit-scheme :init mit-scheme-init :coding-system utf-8-unix)
+          (R :init (lambda (port-filename coding-system)
+                     (format
+                      "source('%s', keep.source=TRUE, chdir=TRUE)\nstartSwank('%s')\n"
+                      ,(expand-file-name
+                        "_extensions_/swankr/swank.R" iff-source)
+                      port-filename)))
+          (ruby :coding-system utf-8-unix
+                :init (lambda (port-filename coding-system)
+                        (format
+                         "load \"%s\"\nstart_swank(\"%s\")\n"
+                         ,(expand-file-name
+                           "_extensions_/slime/contrib/swank.rb" iff-source)
+                         port-filename)))
+          (node.js :init (lambda (port-filename coding-system)
+                           (format
+                            "require(\"%s\")\nstart_swank(\"%s\")\n"
+                            ,(expand-file-name
+                              "_extensions_/swank-js/swank.js" iff-source)
+                            port-filename)))))
+       (cmd-lst
+        `((sbcl ,(funcall getn "sbcl/sbcl.exe"))
+          (ccl ,(funcall getn "ccl/wx86cl.exe"))
+          (Racket ,(funcall getn "Racket/Racket.exe"))
+          (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
                                 "--library"
-                                ,(expand-file-name
-                                  "mit-scheme/lib" prefix)
-                                "--edit")
-                               :init mit-scheme-init
-                               :coding-system utf-8-unix))
-               (setenv "SBCL_Home" (expand-file-name "sbcl" prefix)))
-           `((sbcl ("sbcl")
-                   :coding-system utf-8-unix)
-             (Racket ("racket")
-                     :coding-system utf-8-unix)))
-         `((R ("R" "--no-save" "--max-vsize=4096M")
-              :init (lambda (port-filename coding-system) 
-                      (format
-                       "source('%s', keep.source=TRUE, chdir=TRUE)\nstartSwank('%s')\n"
-                       ,(expand-file-name
-                         "_extensions_/swankr/swank.R" iff-source)
-                       port-filename)))
-           (ruby ("ruby") :coding-system utf-8-unix
-                 :init (lambda (port-filename coding-system)
-                         (format
-                          "load \"%s\"\nstart_swank(\"%s\")\n"
-                          ,(expand-file-name
-                            "_extensions_/slime/contrib/swank.rb" iff-source)
-                          port-filename)))
-           (node.js ("node" "-i")
-                    :init (lambda (port-filename coding-system)
-                            (format
-                             "require(\"%s\")\nstart_swank(\"%s\")\n"
-                             ,(expand-file-name
-                               "_extensions_/swank-js/swank.js" iff-source)
-                             port-filename)))))))
-
+                                (expand-file-name
+                                 "mit-scheme/lib" prefix)
+                                "--edit"))
+          (R ,(funcall getn "R/bin/R.exe"  "--no-save" "--max-vsize=4096M")
+             ("R" "--no-save" "--max-vsize=4096M"))
+          (node.js ("node" "-i") ("node" "-i")))))
+  (if (eq system-type 'windows-nt)
+      (setenv "SBCL_Home" (expand-file-name "sbcl" prefix)))
+  (setq slime-lisp-implementations
+        (mapcar
+         (lambda(x)
+           (let ((name (car x)))
+             (cons name
+                   (cons (or (nth idx (assoc name cmd-lst))
+                             (list (symbol-name name)))
+                         (cdr x)))))
+         arg-lst)))
 
 ;; (setq inferior-lisp-program
 ;;       (expand-file-name "../../sbcl/sbcl.exe" exec-directory))
