@@ -1,18 +1,20 @@
 (loaddefs-eval
- '(("cws.el"
-    (20933 26253 458000 0)
-    (autoload 'cws-mode "cws" "" t))
-   ("slime.el"
-    (20933 25043 418000 0)
+ '(("slime.el"
+    (20934 65448 341000 0)
     (autoload 'slime "slime" "" t)
     (autoload 'sli "slime" "Not documented.\n\n(fn cmd)" t nil)
     (autoload 'sbcl "slime" "Not documented.\n\n(fn)" t nil)
     (autoload 'R "slime" "Not documented.\n\n(fn)" t nil))
    ("mit-scheme.el"
-    (20933 25043 396000 0)
-    (autoload 'mit-scheme-start-swank "mit-scheme" "Not documented.\n\n(fn file encoding)" nil nil)
+    (20934 65448 322000 0)
     (autoload 'mit-scheme-init "mit-scheme" "Not documented.\n\n(fn file encoding)" nil nil)
     (autoload 'mit-scheme "mit-scheme" "Not documented.\n\n(fn)" t nil))
+   ("xscheme.el"
+    (20934 65448 303000 0)
+    (autoload 'xscheme "xscheme" "Loads xscheme and runs a scheme process in the current buffer.\n\n(fn)" t nil))
+   ("cws.el"
+    (20933 26253 458000 0)
+    (autoload 'cws-mode "cws" "" t))
    ("jde.el"
     (20933 25043 370000 0)
     (autoload 'jde-mode "jde" "" t))

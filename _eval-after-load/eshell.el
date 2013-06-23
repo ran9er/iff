@@ -1,5 +1,4 @@
 ;; -*- encoding: utf-8-unix; -*-
-;; don't need load-once, because eshell-load-hook load only once
 ;;;###autoload
 (autoload 'eshell "eshell" "" t)
 

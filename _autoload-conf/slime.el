@@ -8,7 +8,14 @@
         `((ccl :coding-system utf-8-unix)
           (sbcl :coding-system utf-8-unix)
           (mzscheme :coding-system utf-8-unix)
-          (mit-scheme :init mit-scheme-init :coding-system utf-8-unix)
+          ;; (mit-scheme :coding-system utf-8-unix
+          ;;             :init (lambda (port-filename coding-system)
+          ;;                     (format "(begin (load-option 'format)
+          ;;                            (load %s (->environment '(swank)))(start-swank %s))"
+          ;;                             ,(expand-file-name
+          ;;                               "_extensions_/slime/contrib/swank-mit-scheme.scm"
+          ;;                               iff-source)
+          ;;                             port-filename)))
           (R :init (lambda (port-filename coding-system)
                      (format
                       "source('%s', keep.source=TRUE, chdir=TRUE)\nstartSwank('%s')\n"
@@ -18,7 +25,7 @@
           (ruby :coding-system utf-8-unix
                 :init (lambda (port-filename coding-system)
                         (format
-                         "load \"%s\"\nstart_swank(\"%s\")\n"
+                         "load \"%s\"\nswank.start_swank(\"%s\")\n"
                          ,(expand-file-name
                            "_extensions_/swank.rb" iff-source)
                          port-filename)))
@@ -32,11 +39,10 @@
         `((sbcl ,(funcall getn "sbcl/sbcl.exe"))
           (ccl ,(funcall getn "ccl/wx86cl.exe"))
           (mzscheme ,(funcall getn "Racket/Racket.exe"))
-          (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
-                                "--library"
-                                (expand-file-name
-                                 "mit-scheme/lib" prefix)
-                                "--edit"))
+          ;; (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
+          ;;                       "--library"
+          ;;                       (expand-file-name
+          ;;                        "mit-scheme/lib" prefix)))
           (R ,(funcall getn "R/bin/R.exe"  "--no-save" "--max-vsize=4096M")
              ("R" "--no-save" "--max-vsize=4096M"))
           (node.js ("node" "-i") ("node" "-i")))))
