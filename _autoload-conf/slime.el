@@ -7,7 +7,7 @@
        (arg-lst
         `((ccl :coding-system utf-8-unix)
           (sbcl :coding-system utf-8-unix)
-          (Racket :coding-system utf-8-unix)
+          (mzscheme :coding-system utf-8-unix)
           (mit-scheme :init mit-scheme-init :coding-system utf-8-unix)
           (R :init (lambda (port-filename coding-system)
                      (format
@@ -20,7 +20,7 @@
                         (format
                          "load \"%s\"\nstart_swank(\"%s\")\n"
                          ,(expand-file-name
-                           "_extensions_/slime/contrib/swank.rb" iff-source)
+                           "_extensions_/swank.rb" iff-source)
                          port-filename)))
           (node.js :init (lambda (port-filename coding-system)
                            (format
@@ -31,7 +31,7 @@
        (cmd-lst
         `((sbcl ,(funcall getn "sbcl/sbcl.exe"))
           (ccl ,(funcall getn "ccl/wx86cl.exe"))
-          (Racket ,(funcall getn "Racket/Racket.exe"))
+          (mzscheme ,(funcall getn "Racket/Racket.exe"))
           (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
                                 "--library"
                                 (expand-file-name

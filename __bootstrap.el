@@ -14,7 +14,7 @@
                (cons msg (eval log))
              (append (eval log)(list msg)))))))
 
-(defvar iff--find-path
+(defvar iff--find-source
   (lambda (regexp base)
     (let* ((tm (float-time))
            (this-file (file-name-nondirectory load-file-name))
@@ -29,20 +29,27 @@
                     (mapcar 'expand-file-name
                             (list "~/.emacs" (locate-library site-run-file))))
             ((lambda (x) (file-name-as-directory
-                     ;; iff-source is the newest directory with "init" and "emacs" in it's name
+                     ;; iff-source is the newest directory with regexp in it's name
                      ;; or directory where this file is located (iff-source is $HOME or site-lisp)
                      (or (car x) this-dir)))
-             (let (result)
-               (mapc
-                (lambda (f) (if (file-directory-p f)(setq result (append result (list f)))))
-                (directory-files base t regexp 'file-newer-than-file-p))
-               (setq iff-source-candidates result))))
+             (setq iff-source-candidates
+                   (funcall iff--choice-files
+                            regexp base 'file-newer-than-file-p 'file-directory-p))))
            ;; when this file's name is not .emacs or site-start.el, for example as bootstrap.el
            ;; load this file in emacs init file : (load "...../bootstrap.el")
            (t this-dir))
         (funcall iff--add-log
                  (cons "find source"
                        (- (float-time) tm)))))))
+
+(defvar iff--choice-files
+  (lambda (regexp base &optional srt flt)
+    (let ((flt (or flt 'identity))
+          result)
+      (mapc
+       (lambda (f) (if (funcall flt f)(setq result (append result (list f)))))
+       (directory-files base t regexp srt))
+      result)))
 
 (defvar iff--find-files
   (lambda (dir exp)
@@ -53,7 +60,7 @@
 (defvar iff-source-candidates nil)
 
 (defvar iff-source
-  (funcall iff--find-path
+  (funcall iff--find-source
            "iff\\|init.*el\\|init.*emacs\\|emacs.*init"
            (apply 'expand-file-name
                   (cond
