@@ -1,10 +1,4 @@
 ;; -*- encoding: utf-8-unix; -*-
-;; * feature-file
-;; (add-hook 'eshell-load-hook
-;;           '(lambda ()
-;;              (load (gethash "+eshell" *feature-file-hash*
-;;                             (make-temp-name ""))
-;;                    t)))
 
 ;; * environment
 (if (eq system-type 'windows-nt)
@@ -65,7 +59,7 @@
       inhibit-startup-message t        ;禁用启动画面
       initial-scratch-message          ;初始内容
       (purecopy "\
-;; In sandbox
+;; Matrix
 "))
 
 ;; * coding-system

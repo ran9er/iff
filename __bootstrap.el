@@ -168,6 +168,8 @@
   (lambda (name &optional value)
     (setq value (eval name))
 
+    (set 'debug-on-error (null initial-framework-for-emacs))
+
     (if (file-exists-p value)
         (message (format "%s is %s" name value))
       (throw 'quit (format "Can't found %s in %s." name value)))
@@ -188,6 +190,8 @@
              t)
 
     (add-hook 'emacs-startup-hook iff--startup-hook)
+
+    (set 'debug-on-error (null initial-framework-for-emacs))
 
     "success"))
 
