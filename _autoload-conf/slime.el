@@ -45,7 +45,9 @@
              ("R" "--no-save" "--max-vsize=4096M"))
           (node.js ("node" "-i") ("node" "-i")))))
   (if (eq system-type 'windows-nt)
-      (setenv "SBCL_Home" (expand-file-name "sbcl" prefix)))
+      (progn
+        (setenv "SBCL_Home" (expand-file-name "sbcl" prefix))
+        (setenv "CCL_DEFAULT_DIRECTORY" (expand-file-name "ccl" prefix))))
   (setq slime-lisp-implementations
         (mapcar
          (lambda(x)

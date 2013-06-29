@@ -58,9 +58,8 @@
 (setq message-log-max         t        ;完整的 message-log
       inhibit-startup-message t        ;禁用启动画面
       initial-scratch-message          ;初始内容
-      (purecopy "\
-;; Matrix
-"))
+      ";; Matrix\n"
+      )
 
 ;; * coding-system
 ;; 语言环境
@@ -89,7 +88,8 @@
 
 (remove-hook 'find-file-hook 'vc-find-file-hook)
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (split-window-horizontally)
-            (sbcl)))
+(defvar lisp-box
+  (lambda ()
+    (split-window-horizontally)
+    (sbcl)))
+;; (add-hook 'emacs-startup-hook lisp-box)
