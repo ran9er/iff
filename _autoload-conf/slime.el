@@ -72,10 +72,7 @@
     '(progn
        (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
 
-(add-hook 'slime-repl-mode-hook
-          (lambda ()
-            (skeleton-pair-alist-update slime-repl-mode-map)))
-
+(add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
 
 ;;按回车键后下一行代码自动缩进
 (add-hook 'lisp-mode-hook '(lambda ()

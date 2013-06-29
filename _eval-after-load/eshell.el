@@ -37,7 +37,6 @@
            (outline-minor-mode 1)
            (eldoc-mode)
 ;           (lisp-symbol)
-           (skeleton-pair-alist-update)
            ;; (enable-theme 'eshell)
            (eshell-scroll-conservatively)
            (setq
@@ -48,17 +47,19 @@
                  eshell-scroll-show-maximum-output t)
            (add-to-list 'eshell-output-filter-functions
                         'eshell-postoutput-scroll-to-bottom)
-            (def-key-s eshell-mode-map
-              ;; "C-p"   'eshell-previous-matching-input-from-input
-              ;; "C-n"   'eshell-next-matching-input-from-input
-              ;; "M-p"   'previous-line
-              ;; "M-n"   'next-line
-              "<up>"    'eshell-previous-matching-input-from-input
-              "<down>"  'eshell-next-matching-input-from-input
-              "C-9"     (lambda(&optional x)(interactive "P")(outside "()" 1 " " x))
-              "C-8"     'down-list
-              "C-7"     '(lambda nil (interactive)(up-list -1))
-              )
+           (enable-paredit-mode)
+           ;; (skeleton-pair-alist-update)
+           ;; (def-key-s eshell-mode-map
+           ;;   ;; "C-p"   'eshell-previous-matching-input-from-input
+           ;;   ;; "C-n"   'eshell-next-matching-input-from-input
+           ;;   ;; "M-p"   'previous-line
+           ;;   ;; "M-n"   'next-line
+           ;;   "<up>"    'eshell-previous-matching-input-from-input
+           ;;   "<down>"  'eshell-next-matching-input-from-input
+           ;;   "C-9"     (lambda(&optional x)(interactive "P")(outside "()" 1 " " x))
+           ;;   "C-8"     'down-list
+           ;;   "C-7"     '(lambda nil (interactive)(up-list -1))
+           ;;   )
 ;          (buffer-face-set 'eshell-custom-face)
 ))
 
