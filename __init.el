@@ -88,3 +88,8 @@
 ;(server-start)
 
 (remove-hook 'find-file-hook 'vc-find-file-hook)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (split-window-horizontally)
+            (sbcl)))

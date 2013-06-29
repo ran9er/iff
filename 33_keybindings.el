@@ -22,7 +22,7 @@
     "M-o"       other-window                        ;; 切换到其它缓冲区 Alt+o ;; C-x o
     ;; "M-\\"      resize-horizontal-space            ;; delete-horizontal-space
     "C-x C-q"   view-mode                           ;; 切换 view-mode
-    "M-q"       toggle-read-only                    ;; fill-paragraph
+    ;; "M-q"       read-only-mode                      ;; fill-paragraph
     "C-z"       beacon
     "M-z"       beacon-jump
     "C-x c"     my-clean-buffer                     ;;

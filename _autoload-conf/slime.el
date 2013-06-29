@@ -7,15 +7,14 @@
        (arg-lst
         `((ccl :coding-system utf-8-unix)
           (sbcl :coding-system utf-8-unix)
-          (mzscheme :coding-system utf-8-unix)
-          ;; (mit-scheme :coding-system utf-8-unix
-          ;;             :init (lambda (port-filename coding-system)
-          ;;                     (format "(begin (load-option 'format)
-          ;;                            (load %s (->environment '(swank)))(start-swank %s))"
-          ;;                             ,(expand-file-name
-          ;;                               "_extensions_/slime/contrib/swank-mit-scheme.scm"
-          ;;                               iff-source)
-          ;;                             port-filename)))
+          (mit-scheme :coding-system utf-8-unix
+                      :init (lambda (port-filename coding-system)
+                              (format "(begin (load-option 'format)
+                                     (load %s (->environment '(swank)))(start-swank %s))"
+                                      ,(expand-file-name
+                                        "_extensions_/slime/contrib/swank-mit-scheme.scm"
+                                        iff-source)
+                                      port-filename)))
           (R :init (lambda (port-filename coding-system)
                      (format
                       "source('%s', keep.source=TRUE, chdir=TRUE)\nstartSwank('%s')\n"
@@ -38,11 +37,10 @@
        (cmd-lst
         `((sbcl ,(funcall getn "sbcl/sbcl.exe"))
           (ccl ,(funcall getn "ccl/wx86cl.exe"))
-          (mzscheme ,(funcall getn "Racket/Racket.exe"))
-          ;; (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
-          ;;                       "--library"
-          ;;                       (expand-file-name
-          ;;                        "mit-scheme/lib" prefix)))
+          (mit-scheme ,(funcall getn "mit-scheme/bin/mit-scheme.exe"
+                                "--library"
+                                (expand-file-name
+                                 "mit-scheme/lib" prefix)))
           (R ,(funcall getn "R/bin/R.exe"  "--no-save" "--max-vsize=4096M")
              ("R" "--no-save" "--max-vsize=4096M"))
           (node.js ("node" "-i") ("node" "-i")))))
@@ -61,27 +59,28 @@
 ;; (setq inferior-lisp-program
 ;;       (expand-file-name "../../sbcl/sbcl.exe" exec-directory))
 
-;增加lisp代码的自动完成功能
+;; 增加lisp代码的自动完成功能
 (defun lisp-indent-or-complete (&optional arg)
-    (interactive "p")
-    (if (or (looking-back "^\\s-*") (bolp))
-        (call-interactively 'lisp-indent-line)
-        (call-interactively 'slime-indent-and-complete-symbol)))
+  (interactive "p")
+  (if (or (looking-back "^\\s-*") (bolp))
+      (call-interactively 'lisp-indent-line)
+    (call-interactively 'slime-indent-and-complete-symbol)))
 
 (eval-after-load "lisp-mode"
-    '(progn
-       (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
+  '(progn
+     (define-key lisp-mode-map (kbd "TAB") 'lisp-indent-or-complete)))
 
 (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
 
-;;按回车键后下一行代码自动缩进
-(add-hook 'lisp-mode-hook '(lambda ()
-      (local-set-key (kbd "RET") 'newline-and-indent)))
+;; 按回车键后下一行代码自动缩进
+(add-hook 'lisp-mode-hook
+          '(lambda ()
+             (local-set-key (kbd "RET") 'newline-and-indent)))
 (put 'upcase-region 'disabled nil)
 (global-set-key "\C-cs" 'slime-selector)
 
 
-;(setq inferior-lisp-program "lisp")
+;; (setq inferior-lisp-program "lisp")
 (slime-setup '(slime-fancy
                slime-autodoc
                slime-asdf
