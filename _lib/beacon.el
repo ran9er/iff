@@ -20,16 +20,17 @@
                      "C-M-c to jump back.")))
   (save-excursion
     (save-window-excursion
-      (catch 'exit
-        (and
-         (catch (recursion-depth)
-           (recursive-edit))
-         (throw 'exit t))))))
+      (catch (recursion-depth)
+        (recursive-edit)))))
 
 (defun beacon-jump (&optional n)
   (interactive "p")
   (let* ((x (recursion-depth))
          (i (if (> (or n 1) x)
-                x n)))
-    (throw (- x i) t)))
-
+                x n))
+         (tag (- x i)))
+    (condition-case msg
+        (throw tag t)
+      (error
+       (if (equal msg '(no-catch 0 t))
+           (message "no exit"))))))
