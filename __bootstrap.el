@@ -4,8 +4,6 @@
   (lambda (msg)
     (message (concat "=======>" msg))))
 
-(defvar iff-log nil)
-
 (defvar iff--add-log
   (lambda (msg &optional head log)
     (let ((log (or log 'iff-log)))
@@ -45,47 +43,30 @@
 (defvar iff--choice-files
   (lambda (regexp base &optional srt flt)
     (let ((flt (or flt 'identity))
+          (srt (or srt 'file-newer-than-file-p))
           result)
       (mapc
        (lambda (f) (if (funcall flt f)(setq result (append result (list f)))))
-       (directory-files base t regexp srt))
-      result)))
+       (directory-files base t regexp t))
+      (sort result srt))))
 
 (defvar iff--find-files
-  (lambda (dir exp)
-    (mapcar
-     (lambda (f) (file-name-sans-extension f))
-     (directory-files dir t exp))))
-
-(defvar iff-source-candidates nil)
-
-(defvar iff-source
-  (funcall iff--find-source
-           "iff\\|init.*el\\|init.*emacs\\|emacs.*init"
-           (apply 'expand-file-name
-                  (cond
-                   ((eq system-type 'windows-nt)
-                    `(".." ,exec-directory))
-                   (t
-                    `("~"))))))
-
-(defvar iff-branch
-  (mapcar
-   (lambda(x)
-     (cons
-      (car x)
-      (expand-file-name (cdr x) iff-source)))
-   '((lib-dir   .   "_lib/")
-     (lib-df    .   "_loaddefs")
-     (ext-dir   .   "_extensions_")
-     (eal-dir   .   "_eval-after-load/")
-     (alc-dir   .   "_autoload-conf/")
-     (wk-dir    .   "sandbox/"))))
-
-(defvar iff-pre-init-files
-  (funcall iff--find-files iff-source "^__.*\\.el\\'"))
-(defvar iff-init-files
-  (funcall iff--find-files iff-source "^[^_].*\\.el\\'"))
+  (lambda (dir exp &optional exclude)
+    (let ((tm (float-time))
+          (exclude (or exclude (make-temp-name "")))
+          result)
+      (mapc
+       (lambda (f) (if (string-match exclude f)
+                  nil
+                (setq result
+                      (append result
+                              (list (file-name-sans-extension f))))))
+       (directory-files dir t exp))
+      (funcall iff--add-log
+               (cons (format "list %s +%s -%s"
+                             dir exp exclude)
+                     (- (float-time) tm)))
+      result)))
 
 (defvar iff--check-directory
   (lambda (p base &optional dir-p)
@@ -159,7 +140,7 @@
              (- (float-time) (float-time after-init-time)))))
      (message "Through %d steps, took %g seconds; startup took %g seconds"
               (- (length iff-log) 1)
-              (plist-get (car iff-log) 'init)
+              (plist-get (car iff-log) 'iff)
               (+
                (plist-get (car iff-log) 'emacs)
                (plist-get (car iff-log) 'other)))))
@@ -168,15 +149,9 @@
   (lambda (name &optional value)
     (setq value (eval name))
 
-    (set 'debug-on-error (null initial-framework-for-emacs))
-
     (if (file-exists-p value)
         (message (format "%s is %s" name value))
       (throw 'quit (format "Can't found %s in %s." name value)))
-
-    (if initial-framework-for-emacs
-        (throw 'quit "Have been loaded.")
-      (setq initial-framework-for-emacs t))
 
     (funcall iff--load 'iff-pre-init-files)
     (funcall iff--add-load-path "^_.*_\\'" value)
@@ -186,14 +161,50 @@
     (funcall iff--load 'iff-init-files)
 
     (funcall iff--add-log
-             (list 'init (apply '+ (mapcar 'cdr iff-log)))
+             (list 'iff (apply '+ (mapcar 'cdr iff-log)))
              t)
 
     (add-hook 'emacs-startup-hook iff--startup-hook)
 
-    (set 'debug-on-error (null initial-framework-for-emacs))
-
     "success"))
 
+(defvar iff-log nil)
+
+(defvar iff-source-candidates nil)
+
+(defvar iff-source
+  (funcall iff--find-source
+           "iff\\|init.*el\\|init.*emacs\\|emacs.*init"
+           (apply 'expand-file-name
+                  (cond
+                   ((eq system-type 'windows-nt)
+                    `(".." ,exec-directory))
+                   (t
+                    `("~"))))))
+
+(defvar iff-branch
+  (mapcar
+   (lambda(x)
+     (cons
+      (car x)
+      (expand-file-name (cdr x) iff-source)))
+   '((lib-dir   .   "_lib/")
+     (lib-df    .   "_loaddefs")
+     (ext-dir   .   "_extensions_")
+     (eal-dir   .   "_eval-after-load/")
+     (alc-dir   .   "_autoload-conf/")
+     (wk-dir    .   "sandbox/"))))
+
+(defvar iff-pre-init-files
+  (funcall iff--find-files iff-source "^__.*\\.el\\'" "bootstrap"))
+
+(defvar iff-init-files
+  (funcall iff--find-files iff-source "^[^_].*\\.el\\'"))
+
 (defvar iff-status
-  (catch 'quit (funcall iff--init 'iff-source)))
+  (catch 'quit
+    (let ((debug-on-error t))
+      (if initial-framework-for-emacs
+          (throw 'quit "Have been loaded.")
+        (setq initial-framework-for-emacs t))
+      (funcall iff--init 'iff-source))))
