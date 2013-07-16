@@ -127,7 +127,7 @@
   (setq ac-omni-completion-sources (list (cons "\\." '(ac-source-semantic))
                                          (cons "->" '(ac-source-semantic))))
   (setq ac-sources
-        '(;;ac-source-semantic
+        '(ac-source-semantic
           ac-source-yasnippet
           ac-source-abbrev
           ac-source-words-in-buffer
