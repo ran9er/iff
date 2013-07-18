@@ -35,6 +35,23 @@
    ;; jde-doc-dir "~/d/jdk-6-doc/"
    jde-web-browser "firefox"))
 
+(push 'jde-mode ac-modes)
+
+(add-hook 'jde-mode-hook (lambda () (push 'ac-source-semantic ac-sources)))
+
+(defun ac-semantic-candidate (prefix)
+  (if (memq major-mode
+            '(c-mode c++-mode jde-mode java-mode))
+      (mapcar 'semantic-tag-name
+              (ignore-errors
+                (or (semantic-ia-get-completions
+                     (semantic-analyze-current-context) (point))
+                    (senator-find-tag-for-completion (regexp-quote prefix)))))))
+
+(push
+ '(candidates . (lambda () (all-completions ac-prefix (ac-semantic-candidate ac-prefix))))
+ ac-source-semantic)
+
 (setq semantic-default-submodes '(global-semantic-idle-scheduler-mode
                                   global-semanticdb-minor-mode
                                   global-semantic-idle-summary-mode
@@ -75,14 +92,14 @@
 ;;  (setq defer-loading-jde t)
 ;;
 
-(if defer-loading-jde
-    (progn
-      (autoload 'jde-mode "jde" "JDE mode." t)
-      (setq auto-mode-alist
-	    (append
-	     '(("\\.java\\'" . jde-mode))
-	     auto-mode-alist)))
-  (require 'jde))
+;; (if defer-loading-jde
+;;     (progn
+;;       (autoload 'jde-mode "jde" "JDE mode." t)
+;;       (setq auto-mode-alist
+;; 	    (append
+;; 	     '(("\\.java\\'" . jde-mode))
+;; 	     auto-mode-alist)))
+;;   (require 'jde))
 
 ;; Include the following only if you want to run
 ;; bash as your shell.
