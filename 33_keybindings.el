@@ -7,8 +7,8 @@
                 newline-and-indent
     [remap kill-region]
                 smart-backward-kill                 ;; (kill-region) "C-w"
-    "C-x C-x"   eshell                              ;; exchange-point-and-mark
-    "C-x x"     compile
+    "C-x C-x"   execute-extended-command            ;; exchange-point-and-mark
+    "C-x x"     eshell
     "C-x m"     compile                             ;; compose-mail
     "C-x C-j"   ido-execute-extended-command        ;;
     "C-c C-j"   execute-extended-command            ;; 执行命令
