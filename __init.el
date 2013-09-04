@@ -66,12 +66,12 @@
 (set-language-environment 'utf-8)
 ;(set-clipboard-coding-system 'utf-8)            ;; 剪切板，用于和其他程序之间复制内容
 (setq default-buffer-file-coding-system  'utf-8-unix)     ; 文件
-;; (when (eq system-type 'windows-nt)
-;;   (setq
-;;       default-file-name-coding-system   'chinese-iso-8bit ; 文件名
-;;       default-keyboard-coding-system    'chinese-iso-8bit ; 键盘输入，用于输入法。
-;;       default-terminal-coding-system    'chinese-iso-8bit ; 终端显示的编码方式。
-;;       ))
+(when (eq system-type 'windows-nt)
+  (setq
+      default-file-name-coding-system   'chinese-iso-8bit ; 文件名
+      default-keyboard-coding-system    'chinese-iso-8bit ; 键盘输入，用于输入法。
+      default-terminal-coding-system    'chinese-iso-8bit ; 终端显示的编码方式。
+      ))
 
 ;; * safe-local-variable
 (setq safe-local-variable-values '(

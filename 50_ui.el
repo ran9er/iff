@@ -27,15 +27,17 @@
        (setq
         ;; 设置标题栏显示文件的完整路径名
         frame-title-format
-                        '(:eval (concat (user-login-name) "@" (system-name) "[Emacs"
-                         (nth 2 (split-string (version))) "]  " (fname-title-string)))
+        '(:eval (concat (user-login-name) "@" (system-name) "[Emacs"
+                        (nth 2 (split-string (version))) "]  " (fname-title-string)))
 
         ;; fringe 配置
-        default-indicate-buffer-boundaries '((top . left) (t . left))
+        ;; default-indicate-buffer-boundaries '((top . left) (t . left))
 
         x-select-enable-clipboard t     ;; 使用X剪贴板
         x-stretch-cursor t              ;; Tab字符使用大光标
         )
+
+       (set-default 'indicate-empty-lines t)
 )))
 
 ;; * 窗口最大化
