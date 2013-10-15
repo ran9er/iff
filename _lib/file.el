@@ -1,8 +1,5 @@
 ;; -*- encoding: utf-8-unix; -*-
 ;; File-name:    <file.el>
-;; Create:       <2011-12-27 21:32:02 ran9er>
-;; Time-stamp:   <2012-02-14 00:21:23 ran9er>
-;; Mail:         <2999am@gmail.com>
 
 ;;;###autoload
 (defun read-lines (filePath)
@@ -15,8 +12,9 @@
 ;;;###autoload
 (defun find-temp (&optional suffix)
   (interactive "sExtension: ")
-  (let ((suf (if (and suffix (null (string= suffix "")))
-                 (concat "." suffix))))
+  (let ((suf (concat "."
+                     (if (and suffix (null (string= suffix "")))
+                         suffix "markdown"))))
     (find-file
      (concat
       (make-temp-name
