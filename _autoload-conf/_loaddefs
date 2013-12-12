@@ -1,13 +1,20 @@
 (loaddefs-eval
- '(("xscheme.el"
-    (20944 12701 394000 0)
-    (autoload 'xscheme "xscheme" "Loads xscheme and runs a scheme process in the current buffer.\n\n(fn)" t nil))
-   ("slime.el"
-    (20944 12701 366000 0)
+ '(("slime.el"
+    (21160 9363 345000 0)
     (autoload 'slime "slime" "" t)
     (autoload 'sli "slime" "Not documented.\n\n(fn cmd)" t nil)
     (autoload 'sbcl "slime" "Not documented.\n\n(fn)" t nil)
+    (autoload 'ccl "slime" "Not documented.\n\n(fn)" t nil)
     (autoload 'R "slime" "Not documented.\n\n(fn)" t nil))
+   ("jde.el"
+    (21160 9363 332000 0)
+    (autoload 'jde-mode "jde" "" t))
+   ("auto-complete.el"
+    (21160 9363 227000 0)
+    (autoload 'global-auto-complete-mode "auto-complete" "" t))
+   ("xscheme.el"
+    (20944 12701 394000 0)
+    (autoload 'xscheme "xscheme" "Loads xscheme and runs a scheme process in the current buffer.\n\n(fn)" t nil))
    ("scheme.el"
     (20944 12701 329000 0)
     (autoload 'run-scheme "scheme" "Quack scheme editing mode" t)
@@ -19,9 +26,6 @@
    ("cws.el"
     (20933 26253 458000 0)
     (autoload 'cws-mode "cws" "" t))
-   ("jde.el"
-    (20933 25043 370000 0)
-    (autoload 'jde-mode "jde" "" t))
    ("mew.el"
     (20929 50055 292000 0)
     (autoload 'mew "mew" nil t)
@@ -33,9 +37,6 @@
    ("paredit.el"
     (20875 23200 656000 0)
     (autoload 'enable-paredit-mode "paredit" "" t))
-   ("auto-complete.el"
-    (20865 65532 131000 0)
-    (autoload 'global-auto-complete-mode "auto-complete" "" t))
    ("magit.el"
     (20865 55354 168000 0)
     (autoload 'magit-status "magit" nil t))

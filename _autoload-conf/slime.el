@@ -117,6 +117,11 @@
   (slime 'sbcl))
 
 ;;;###autoload
+(defun ccl ()
+  (interactive)
+  (slime 'ccl))
+
+;;;###autoload
 (defun R ()
   (interactive)
   (slime 'R))

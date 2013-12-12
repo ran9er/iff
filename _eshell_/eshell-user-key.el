@@ -3,21 +3,23 @@
 ;; * tab
 (defun user-tab ()
   (interactive)
-  (let ((input (eshell-get-old-input)) len)
-    (if (string-equal input "")
-        (insert-string "cd ")
-      (progn
-        (cond
-         ((string-equal input "cd  ")
-          (delete-backward-char 1)
-          (insert-string "-0"))
-         ((string-match "^cd\\ -[0-9]+$" input)
-          (setq len (length input))
-          (delete-backward-char (- len 4))
-          (insert-string (1+ (read(substring input 4 len)))))
-         (t
-          (pcomplete))
-         )))))
+  (if (not (eq (line-number-at-pos)
+               (line-number-at-pos (point-max))))
+      (goto-char (point-max))
+    (let ((input (eshell-get-old-input)) len)
+      (if (string-equal input "")
+          (insert-string "cd ")
+        (progn
+          (cond
+           ((string-equal input "cd  ")
+            (delete-backward-char 1)
+            (insert-string "-0"))
+           ((string-match "^cd\\ -[0-9]+$" input)
+            (setq len (length input))
+            (delete-backward-char (- len 4))
+            (insert-string (1+ (read(substring input 4 len)))))
+           (t
+            (pcomplete))))))))
 
 ;; * ret
 (defun user-ret ()
