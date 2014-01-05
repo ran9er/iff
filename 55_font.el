@@ -13,6 +13,7 @@
                 ;; "XHei Mono"
                 ;; "Hiragino Sans GB"
                 ;; "Hiragino Sans GB W3"
+                "微软雅黑Monaco"
                 "Yahei Mono"
                 "YaHei Consolas Hybrid"
                 "Microsoft Yahei"

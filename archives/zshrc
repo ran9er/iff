@@ -192,7 +192,7 @@ user-complete(){
             zle expand-or-complete
             ;;
         " " )
-            BUFFER="!?"
+            BUFFER="z "
             zle end-of-line
             ;;
         "cd --" )                  # "cd --" 替换为 "cd +"
@@ -267,15 +267,20 @@ alias top10='print -l  ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 #}}}
 
 #路径别名 {{{
+function exist-path () {
+    for p in $* ; do
+        [[ -e $p ]] && echo $p && return;
+    done
+}
 #进入相应的路径时只要 cd ~xxx
-hash -d WWW="/home/lighttpd/html"
-hash -d ARCH="/mnt/arch"
-hash -d PKG="/var/cache/pacman/pkg"
+hash -d WWW=$(exist-path /home/lighttpd/html ~/ROR/)
+hash -d MNT=$(exist-path /{mnt,media}/$USER /{mnt,media})
+hash -d PKG=$(exist-path /var/cache/{pacman/pkg,apt/archives})
 hash -d E="/etc/env.d"
 hash -d C="/etc/conf.d"
-hash -d I="/etc/rc.d"
+hash -d I=$(exist-path /etc/{init.d,rc.d})
 hash -d X="/etc/X11"
-hash -d BK="/home/r00t/config_bak"
+hash -d BK=$(exist-path /home/$USER/{config_bak,iff})
 hash -d HIST="$HISTDIR"
 #}}}
 
@@ -293,7 +298,7 @@ kardinal@linuxtoy.org
 zstyle ':completion:*:my-accounts' users-hosts $my_accounts
 
 #def pacman-color completion as pacman
-compdef pacman-color=pacman
+#compdef pacman-color=pacman
 #}}}
 
 #{{{ F1 计算器
@@ -310,6 +315,11 @@ function timeconv { date -d @$1 +"%Y-%m-%d %T" }
 
 # }}}
 
+####{{{ swap ctrl & capslock
+# XMM=~/.Xmodmap
+# [[ -e $XMM ]] && xmodmap $XMM 2> /dev/null
+#}}}
 
+source .z.sh
 ## END OF FILE #################################################################
 # vim:filetype=zsh foldmethod=marker autoindent expandtab shiftwidth=4
