@@ -7,7 +7,7 @@
     ("sh"     .  "bash")
     ("java"   .  "javac")
     ("hs"     .  "hugs")
-    ("js"     .  "node")
+    ("js"     .  "nodejs")
     ("coffee" .  "coffee")
     ))
 
@@ -62,7 +62,7 @@ File suffix is used to determine what program to run."
 (defun node.js ()
   "make a node.js shell"
   (interactive)
-  (switch-to-buffer (make-comint "node.js" "node" nil "-i")))
+  (switch-to-buffer (make-comint "node.js" "nodejs" nil "-i")))
 
 ;;;###autoload
 (defun coffee ()
