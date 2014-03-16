@@ -5,8 +5,8 @@
        (getn (lambda(x &rest rst)`(,(expand-file-name x prefix) ,@rst)))
        (idx (if (eq system-type 'windows-nt) 1 2))
        (arg-lst
-        `((ccl :coding-system utf-8-unix)
-          (sbcl :coding-system utf-8-unix)
+        `((sbcl :coding-system utf-8-unix)
+          (ccl :coding-system utf-8-unix)
           (mit-scheme :coding-system utf-8-unix
                       :init (lambda (port-filename coding-system)
                               (format "(begin (load-option 'format)
@@ -88,7 +88,7 @@
                slime-asdf
                slime-banner
                slime-clipboard
-               slime-highlight-edits
+               ;; slime-highlight-edits
                ))
 (setq slime-complete-symbol*-fancy t)
 (setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)

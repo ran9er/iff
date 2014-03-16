@@ -12,6 +12,15 @@
                (cons msg (eval log))
              (append (eval log)(list msg)))))))
 
+(defun iff--prog (msg func)
+  `(lambda (&rest args)
+     (let ((tm (float-time)))
+       (funcall ,func args)
+       (funcall iff--add-log
+                (cons ,msg
+                      (- (float-time) tm))))))
+
+
 (defvar iff--find-source
   (lambda (regexp base)
     (let* ((tm (float-time))

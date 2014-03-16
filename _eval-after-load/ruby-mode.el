@@ -1,7 +1,7 @@
 ;; -*- encoding: utf-8-unix; -*-
 ;; File-name:    <ruby-mode.el>
 ;; Create:       <2012-01-08 00:44:15 ran9er>
-;; Time-stamp:   <2012-01-25 19:53:22 ran9er>
+;; Time-stamp:   <2014-03-08 14:54:49 ran9er>
 ;; Mail:         <2999am@gmail.com>
 (load-once
  ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/ruby")  
@@ -32,6 +32,8 @@
 (inf-ruby-keys)
 (turn-on-font-lock)
 
+(add-to-list 'load-path (expand-file-name "rinari/" exts-dir))
+(require 'rinari)
 ;; (require 'ruby-block)
 ;; (ruby-block-mode t)
 ;; ;; do overlay
